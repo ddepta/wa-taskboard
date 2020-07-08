@@ -1,0 +1,110 @@
+<div class="wrapper chat-open">
+
+    <div class="left-side">
+        <div class="scroll-wrapper">
+            <ul class="menu-list">
+                <li>PR</li>
+                <li>SET</li>
+                <li id="btn-chat-all"
+                data-id="0" data-fullname="ALL" data-new="0"
+                onclick="userPressed(this); return false;"
+                >ALL</li>
+                <button 
+                id="btn-chat-all"
+                style="background: none; border: none; height: 37px; width: 100%; display: block;"
+                data-id="0" data-fullname="All" data-new="0"
+                onclick="userPressed(this); return false;"
+                >All</button>
+                <% for(let index = 0; index <users.length; ++index) { %>
+                <%
+                    if(self.req.user.id === user[index].id){
+                        continue;
+                    }
+                %>
+                <li id="btn-chat-<%=users[index].id%>"
+                    data-id="<%=users[index].id%>" data-fullname="<%users[index].shortName()%>" data-now="0"
+                    onclick="userPressed(this); return false;"
+                ><%=users[index].shortName()%></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chat-wrapper">
+        <div class="topbar">
+            <div class="title">
+
+            </div>
+            <div class="close">
+                X
+            </div>
+        </div>
+        <div class="chat">
+            <div class="messages-wrapper">
+                <div class="scroll-wrapper" id="messages" data-action="<%self.urlFor('api/messages', 'index')%>">
+                
+                </div>
+            </div>
+            <div class="input-wrapper">
+                <textarea placeholder="Nachricht" id="message"></textarea>
+                <button id="send-message" onclick="sendPressed(this); return false;"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-side">
+        <div class="kanban-wrapper">
+            <div class="row">
+                <%for (let index = 0; index < array.length; index++){  %>
+                   <% const workflow = workflows[index]; %>
+                    <div class="col">
+                         <div class="title" style="background: <%-workflow.color%>; border-left-color: <%-workflow.color%>;">
+                            <%=workflow.name%>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="row">
+                <%for (let index = 0; index < array.length; index++){  %>
+                   <% const workflow = workflows[index]; %>
+                <div class="col">
+                      <div class="add">
+                        +
+                      </div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="row tasks-wrapper">
+                <%for (let index = 0; index < array.length; index++){ %>
+                   <% const workflow = workflows[index]; %>
+                <div class="col">
+                    <div class="tasks" data-workflow-id="<%-workflowId.id%>">
+                        <% if(workflowTasks[workflow.id] instanceof Array){%>
+                        <% for (let i = 0; i < workflowTasks[workflow.id].length; i++){ %>
+                            <% const task = workflowTasks[workflow.id][i]; %>
+                            <div class="task" data-id="<%-task.id%>">
+                            <div class="line" style="background: <%-workflow.color%>;"></div>
+                            <div class="name">
+                                #<%-task.id%> <% task.name %>
+                            </div>
+                            <div class="time">
+                                130 von 240 <button>play/stop</button>
+                            </div>
+                            <div class="footer">
+                                <div class="assigned">
+                                    <% task.assignedTo.fullname %>
+                                </div>
+                                <div class="deadline">
+                                    now
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title><%=title%></title>
+        <meta name="viewport" content="width-device-width, initial-scale=1">
+        <% for (let index = 0; index < self.cssFiles.length; index++) { %>
+        <link rel= "stylesheet" type="text/css" href="/assets/css/<%-self.cssFiles[index] %>.css">
+        <% } %>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            window.io = io.connect();
+        </script>
+    </head>
+    <body>
+        <% if(typeof navigation === 'undefined' || navigation !== false) {%>
+        <nav>
+            <ul>
+                <li><a href="<%=self.urlFor('pages','index')%>">Index"</a></li>
+                <li><a href="<%=self.urlFor('pages','imprint')%>">Impressum"</a></li>
+            </ul>
+        </nav>
+    <% } %>
+        <%-body%>
+        <% if(self.req.user) {%>
+        <script>
+              let currentUserId = <% self.req.user.id %>
+        </script>
+        <% } %>
+        <% for (let index = 0; index<self.jsFiles.length; index++){%>
+            <script scr="/assets/js<%-self.jsFiles[index]+(cfg.minify===true?'.min' : '')%>.js"></script>
+        <% } %>
+    </body>
+</html>

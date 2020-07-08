@@ -1,0 +1,296 @@
+@import './shared/defines.less';
+@import './shared/mixins.less';
+
+.scroll-wrapper{
+    width: 100%;
+    height: 100%;
+    padding-right: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+      
+}
+
+.wrapper {
+    .left-side{
+        position: relative;
+        width: 44px;
+        height: 100vh;
+        overflow: hidden;
+        float: left;
+        background-color: red;
+
+            .menu-list{
+                list-style: none;
+
+                li{
+                    display: block;
+                    height: calc(@menu-width - 8px);
+                    width: calc(@menu-width - 8px);
+                    line-height: 25px;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    background-color: @color-menu-item;
+                    text-align: center;
+                    box-sizing: border-box;
+                    padding: 4px;
+                    margin: 4px;
+                    
+
+                    &:hover{
+                        opacity: 0.8;
+                    }
+                }
+            
+        }
+
+    }
+
+    .chat-wrapper{
+        position: relative;
+        width: @chat-width;
+        height: 100vh;
+        overflow: hidden;
+        float: left;
+        display: none;
+        background-color: green;
+
+        .topbar {
+            .clearfix();
+            height: @chat-topbar-height;
+            width: 100%;
+            background-color: @color-chat-topbar-bg;
+            color: @color-chat-topbar-text;
+
+            .title{
+                width: calc(~"100% - @{chat-topbar-height}");
+                height: 100%;
+                float: left;
+                line-height: @chat-topbar-height;
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: uppercase;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .close{
+                width: @chat-topbar-height;
+                height: 100%;
+                float: left;
+                line-height: @chat-topbar-height;
+                box-sizing: border-box;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                background: darken(@color-chat-topbar-bg,20%)
+            }
+        }
+
+        .chat{
+            position: relative;
+            width: 100%;
+            height: calc("100vh -@{chat-topbar-height}");
+
+            .massages-wrapper{
+                height: calc(~"100vh -@{chat-input-height}");
+            }
+
+            .input-wrapper{
+                textarea{
+                    display: block;
+                    height: @chat-input-height;
+                    width: calc(~"100% - @{chat-input-height}");
+                    float: left;
+                    box-sizing: border-box;
+                    background: white;
+                    padding: 5px 5px;
+                    border: none;
+                    resize: none;
+                    font-family: inherit;
+                    font-size: 14px;
+                }
+
+                button{
+                    height: @chat-input-height;
+                    width: calc(~"100% - @{chat-input-height}");
+                    float: left;
+                    border: none;
+                    box-sizing: border-box;
+                    background-color: @color-chat-submit-bg;
+                    color: @color-chat-submit-text;
+                }
+            }
+        }
+
+    }
+
+    .right-side{
+        position: relative;
+        width: calc(~"100% - @{menu-width}");
+        height: 100vh;
+        overflow: hidden;
+        float: left;
+        .kanban-wrapper{
+            .scroll-wrapper;
+            overflow-x: auto;
+            padding-bottom: 20px;
+
+            .row{
+                .clearfix();
+                white-space: nowrap;
+
+                &.task-wrapper{
+                    height: calc(~"100% - @{kanban-add-height} - @{kanban-title-height}");
+                
+                    .col{
+                        height: 100%;
+                        overflow: hidden;
+                    }
+                }
+
+                .col{
+                    display: inline-block;
+                    width: @kanban-col-width;
+
+                    .title{
+                        height: @kanban-title-height;
+                        Width: calc(~"100%-10px");
+                        box-sizing: border-box;
+                        padding: 10px;
+                        background: #e67e22;
+                        border-left-color: #e67e22;
+                        line-height: 24px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: white;
+                        margin-right: 10px;
+
+                        &:after{
+                            content: " ";
+                            height: 0px;
+                            line-height: 0px;
+                            width: 0px;
+                            display: block;
+                            position: absolute;
+                            background: transparent;
+                            color: transparent;
+                            top: 0px;
+                            left: 100%;
+                            border-top: @kanban-title-height/2 solid;
+                            border-top-color: transparent;
+                            border-bottom: @kanban-title-height/2 solid;
+                            border-bottom-color: transparent;
+                            border-left: 10px solid;
+                            border-left-color: inherit;
+                            border-right: 0px;
+                            border-right-color: transparent;
+
+
+                        }
+                    }
+
+                    .add{
+                        position: relative;
+                        height: @kanban-add-height;
+                        width: 100%;
+                        color: white;
+                        text-align: center;
+                        line-height: @kanban-add-height;
+                        font-size: 32px;
+                        font-weight: bold;
+                        opacity: 0.6;
+                        
+                        &:hover{
+                            opacity: 1;
+                        }
+                    }
+
+                    .tasks{
+                        .scroll-wrapper;
+                        
+                        .task-placeholder{
+                            margin-bottom: 5px;
+                        }
+
+                        .task{
+                            background: rgba(255,255,255,0.8);
+                            margin-bottom: 10px;
+                            transition: transform 300ms;
+
+                            &.sortable-dragging{
+                               // transform: rotateZ(4deg);
+                                
+                            }
+
+                            .line{
+                                height: 4px;
+                                background: #e67e22;
+
+
+                            }
+
+                            .name{
+                                font-size: 14px;
+                                line-height: 18px;
+                                font-weight: bold;
+                                color: black;
+                                white-space: normal;
+                                padding: 5px;
+                            }
+
+                            .time{
+                                font-size: 14px;
+                                padding: 5px;
+                            }
+
+                            .footer{
+                                .clearfix();
+                                font-size: 12px;
+                                .assigned{
+                                    float: left;
+                                    padding: 5px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    max-width: 60%;
+                                    box-sizing: border-box;
+                                }
+
+                                .deadline{
+                                    float: left;
+                                    padding: 5px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    max-width: 40%;
+                                    box-sizing: border-box;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    &.chat-open{
+        .chat-wrapper{
+            display: block;
+        }
+
+        .right-side{
+            width: calc(~"100vw - @{menu-width} - @{chat-width}");
+        }
+
+
+
+    }
+}
