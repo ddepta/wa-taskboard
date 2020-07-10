@@ -1,27 +1,23 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const message = sequelize.define('message', {
-    text:{
-        type: DataTypes.STRING,
-        allowNull: false
-      }
-
+  const Message = sequelize.define('Message', {
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
-
-    tableName: 'project'
+    tableName: 'message'
   });
-  /*message.associate = function(models) {
-    MessageChannel.belongsTo(models.User,{
+  Message.associate = function(models) {
+    Message.belongsTo(models.User, {
       as: 'from',
       foreignKey: 'fromId'
-
     });
 
-    MessageChannel.belongsTo(models.User,{
-      as: 'from',
+    Message.belongsTo(models.User, {
+      as: 'to',
       foreignKey: 'toId'
-
     });
-  };*/
-  return message;
+  };
+  return Message;
 };

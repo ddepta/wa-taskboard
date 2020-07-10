@@ -9,3 +9,30 @@
         <button onclick="submitPressed(this); return false;"></button>
     </form>
 </div>
+<script>
+    function submitPressed(elm)
+    {
+        var form = document.getElementById('signin-form');
+        var xhr = new XMLHttpRequest();
+
+        xhr.onload = function() {
+            if(xhr.status >= 200 && xhr.status < 300)
+            {
+                console.log('success');
+            }
+            else
+            {
+                console.log('request failed');
+            }
+        }
+        
+        xhr.open(form.getAttribute('method') || 'POST', form.getAttribute('action'));
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            user: {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            }
+        }));
+    }
+</script>

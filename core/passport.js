@@ -24,7 +24,7 @@
         return bcrypt.compareSync(str, hash);
     }
 
-    static generateJwt(){
+    static generateJwt(userId){
 
         let payload ={
             iat: Date.now(),
@@ -76,7 +76,8 @@
     }
 
 
-    static authorizationUserWithCookies(re,res,userId){
+    static authorizeUserWithCookies(req,res,userId){
+        let user = userId;
 
         const self = this;
         let token = self.generateJwt(userId);

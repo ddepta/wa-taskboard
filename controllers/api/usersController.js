@@ -117,7 +117,7 @@ class ApiUsersController extends Controller{
 
     try{
 
-        user = await self.db.user.findOne({
+        user = await self.db.User.findOne({
             where: {
                 email: remoteData.email
             }
@@ -146,8 +146,9 @@ class ApiUsersController extends Controller{
         });
     }
     else{
+        let tmp = user;
 
-        let token = Passport.authorizedUserWithCookie(self.req, self.res, user.id);
+        let token = Passport.authorizeUserWithCookies(self.req, self.res, user.id);
         self.render({
             token: token
         }, {
